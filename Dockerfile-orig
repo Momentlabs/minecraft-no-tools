@@ -1,0 +1,29 @@
+FROM itzg/minecraft-server
+
+MAINTAINER David Rivas david@momentlabs.io
+
+RUN apt-get install -y git build-essential libreadline-dev
+
+# Install GO.
+WORKDIR /usr/local
+RUN wget https://storage.googleapis.com/golang/go1.6.3.linux-amd64.tar.gz -O -| tar -xz
+# should run a checksum. cdde5e08530c0579255d6153b08fdb3b8e47caabbe717bc7bcd7561275a87aeb
+ENV PATH=${PATH}:"/usr/local/go/bin"
+
+
+# Clearly this needs to be done as a separate download.
+# However,this expediency is going to be taken to enable 
+# a slightly less complex development pipeline.
+# get the latest craft-config.
+RUN mkdir -p /go/src
+ENV GOPATH=/go
+
+# This needs to be set to a username for things to work properly. 
+# It's intended to be a valid minecraft user, but there is currently
+# nothing that actually requires that, so any string will do. 
+# It is currently used as the root of storage for worlds and backups.
+ENV USER=
+
+
+# This is what the parent expects.
+WORKDIR /data
