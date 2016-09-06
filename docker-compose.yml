@@ -19,7 +19,7 @@ minecraft-server:
     - MOTD="Vanilla test server in a docker container."
     - ONLINE_MODE=false
 
-  image: minecraft-itzg
+  image: minecraft-no-tools
   container_name: minecraft-server
 
   tty: true
