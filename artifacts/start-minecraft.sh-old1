@@ -162,7 +162,7 @@ function installForge {
   SERVER="forge-$normForgeVersion-universal.jar"
 
   if [ ! -e "$SERVER" ]; then
-    echo "`date --rfc-3339=seconds` [INFO] Downloading $FORGE_INSTALLER ..."
+    echo "date --rfc-3339=seconds` [INFO] Downloading $FORGE_INSTALLER ..."
     wget -q http://files.minecraftforge.net/maven/net/minecraftforge/forge/$normForgeVersion/$FORGE_INSTALLER
     echo "`date --rfc-3339=seconds` [INFO] Installing $SERVER"
     java -jar $FORGE_INSTALLER --installServer
@@ -178,7 +178,7 @@ function installVanilla {
   fi
 }
 
-echo "`date --rfc-3339=seconds` [INFO] Checking type information."
+echo "[INFO] Checking type information."
 case "$TYPE" in
   *BUKKIT|*bukkit|SPIGOT|spigot)
     case "$TYPE" in
@@ -458,9 +458,9 @@ fi
 # If we have a bootstrap.txt file... feed that in to the server stdin
 if [ -f /data/bootstrap.txt ];
 then
-    echo "`date --rfc-3339=seconds` [INFO] Starting server: java $JMV_OPTS -jar $SERVER $@ < /data/bootstrap.txt"
+    echo "`date --rfc-3339=date` [INFO] Starting server: java $JMV_OPTS -jar $SERVER $@ < /data/bootstrap.txt"
     exec java $JVM_OPTS -jar $SERVER "$@" < /data/bootstrap.txt
 else
-    echo "`date --rfc-3339=seconds` [INFO] Starting server: java $JMV_OPTS -jar $SERVER $@"
+    echo "`date --rfc-3339=date` [INFO] Starting server: java $JMV_OPTS -jar $SERVER $@"
     exec java $JVM_OPTS -jar $SERVER "$@"
 fi
