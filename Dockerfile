@@ -1,6 +1,6 @@
 FROM java:8
 
-MAINTAINER itzg
+MAINTAINER David Rivas david@momentlabs.io
 
 ENV APT_GET_UPDATE 2016-04-23
 RUN apt-get update
@@ -24,18 +24,17 @@ RUN useradd -s /bin/false --uid 1000 minecraft \
 EXPOSE 25565 25575
 
 ADD https://github.com/itzg/restify/releases/download/1.0.3/restify_linux_amd64 /usr/local/bin/restify
-COPY start.sh /start
-COPY start-minecraft.sh /start-minecraft
-COPY mcadmin.jq /usr/share
+COPY artifacts/start.sh /start
+COPY artifacts/start-minecraft.sh /start-minecraft
+COPY artifacts/mcadmin.jq /usr/share
 RUN chmod +x /usr/local/bin/*
 
 VOLUME ["/data","/mods","/config","/plugins","/home/minecraft"]
 
-COPY server.properties /tmp/server.properties
-COPY jars/spigot_server.jar /tmp/spigot_server.jar
-COPY server/spigot.yml /tmp/spigot.yml
-COPY server/bukkit.yml /tmp/bukkit.yml
-COPY server/server.properties /tmp/server.properties
+COPY artifacts/server.properties /tmp/server.properties
+COPY artifacts/jars/spigot_server.jar /tmp/spigot_server.jar
+COPY artifacts/spigot.yml /tmp/spigot.yml
+COPY artifacts/bukkit.yml /tmp/bukkit.yml
 
 WORKDIR /data
 
@@ -44,5 +43,5 @@ ENTRYPOINT [ "/start" ]
 ENV UID=1000 GID=1000 \
     MOTD="A Minecraft Server Powered by Docker" \
     JVM_OPTS="-Xmx1024M -Xms1024M" \
-    TYPE=VANILLA VERSION=LATEST FORGEVERSION=RECOMMENDED LEVEL=world PVP=true DIFFICULTY=easy \
+    TYPE=VANILLA VERSION=LATEST FORGEVERSION=RECOMMENDED LEVEL=world PVP=false DIFFICULTY=easy \
     LEVEL_TYPE=DEFAULT GENERATOR_SETTINGS= WORLD= MODPACK= ONLINE_MODE=TRUE
