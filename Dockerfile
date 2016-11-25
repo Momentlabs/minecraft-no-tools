@@ -36,6 +36,7 @@ COPY artifacts/jars/spigot_server.jar /tmp/spigot_server.jar
 COPY artifacts/spigot.yml /tmp/spigot.yml
 COPY artifacts/bukkit.yml /tmp/bukkit.yml
 
+
 WORKDIR /data
 
 ENTRYPOINT [ "/start" ]

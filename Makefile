@@ -14,12 +14,16 @@ help:
 	@echo local \# builds the dockerfile localy to $(rep)
 	@echo deploy-to-repo \# builds and pushes the file the AWS repo.
 
-local:
+list-account:
+	@echo Using account $(shell aws --profile $(profile) --region $(region) --output text sts get-caller-identity)
+	@echo with $(shell aws --profile $(profile) --region $(region) --output text iam list-account-aliases)
+
+local: 
 	@echo building local image: $(repo)
 	docker build -t $(repo) .
 
 deploy-to-repo: local
 	@echo Bulding and pusing repository repository: $(repo)
-	docker login -u AWS -p $(token) https://$(aws_repo)
+	docker login -u AWS -p $(token) $(aws_repo)
 	docker tag $(repo):latest $(aws_repo)/$(repo):latest
 	docker push $(aws_repo)/$(repo):latest
